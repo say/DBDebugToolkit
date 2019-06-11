@@ -84,11 +84,7 @@ typedef NS_ENUM(NSUInteger, DBBodyPreviewViewControllerViewState) {
                 }
             }
             self.textView.text = dataString;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [self setViewState:DBBodyPreviewViewControllerViewStateShowingText animated:YES];
-            });
-
-            
+            [self setViewState:DBBodyPreviewViewControllerViewStateShowingText animated:YES];
         }
     };
     if (mode == DBBodyPreviewViewControllerModeRequest) {
@@ -101,7 +97,7 @@ typedef NS_ENUM(NSUInteger, DBBodyPreviewViewControllerViewState) {
 - (void)setViewState:(DBBodyPreviewViewControllerViewState)state animated:(BOOL)animated {
     [UIView animateWithDuration:animated ? 0.35 : 0.0 animations:^{
         self.activityIndicator.alpha = 0.0;
-        self.textView.alpha = 0.0;
+        self.textView.alpha = 1.0;
         self.imageView.alpha = 0.0;
         switch (state) {
             case DBBodyPreviewViewControllerViewStateLoading: {
