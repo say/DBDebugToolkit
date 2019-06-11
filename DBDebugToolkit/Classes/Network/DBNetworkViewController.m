@@ -57,6 +57,8 @@ static NSString *const DBNetworkViewControllerRequestCellIdentifier = @"DBReques
     [self configureViewWithLoggingRequestsEnabled:self.networkToolkit.loggingEnabled];
     self.operationQueue = [NSOperationQueue new];
     self.operationQueue.maxConcurrentOperationCount = 1;
+    [self.searchBar setText:@"say"];
+    [self updateRequests];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
