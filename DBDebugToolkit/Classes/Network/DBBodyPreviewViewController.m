@@ -40,6 +40,12 @@ typedef NS_ENUM(NSUInteger, DBBodyPreviewViewControllerViewState) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(handleSaveButton)];
+}
+
+- (void)handleSaveButton {
+    UIActivityViewController *viewController = [[UIActivityViewController alloc] initWithActivityItems:@[self.textView.text] applicationActivities:nil];
+    [self.navigationController presentViewController:viewController animated:YES completion:nil];
 }
 
 - (void)configureWithRequestModel:(DBRequestModel *)requestModel mode:(DBBodyPreviewViewControllerMode)mode {
