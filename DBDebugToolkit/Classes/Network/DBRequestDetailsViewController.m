@@ -62,6 +62,11 @@ static NSString *const DBRequestDetailsViewControllerPrototypeSimpleCellIdentifi
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 44.0;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Response Body" style:UIBarButtonItemStylePlain target:self action:@selector(handleViewResponseButton)];
+}
+
+- (void)handleViewResponseButton {
+    [self openBodyPreview:DBRequestDetailsViewControllerTabResponse];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -79,11 +84,11 @@ static NSString *const DBRequestDetailsViewControllerPrototypeSimpleCellIdentifi
 
 #pragma mark - Opening body preview
 
-- (void)openBodyPreview {
+- (void)openBodyPreview:(DBRequestDetailsViewControllerTab)tab {
     NSBundle *bundle = [NSBundle debugToolkitBundle];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"DBBodyPreviewViewController" bundle:bundle];
     DBBodyPreviewViewController *bodyPreviewViewController = [storyboard instantiateInitialViewController];
-    DBBodyPreviewViewControllerMode mode = self.selectedTab == DBRequestDetailsViewControllerTabRequest ? DBBodyPreviewViewControllerModeRequest : DBBodyPreviewViewControllerModeResponse;
+    DBBodyPreviewViewControllerMode mode = tab == DBRequestDetailsViewControllerTabRequest ? DBBodyPreviewViewControllerModeRequest : DBBodyPreviewViewControllerModeResponse;
     [bodyPreviewViewController configureWithRequestModel:self.requestModel mode:mode];
     [self.navigationController pushViewController:bodyPreviewViewController animated:true];
 }
@@ -92,7 +97,7 @@ static NSString *const DBRequestDetailsViewControllerPrototypeSimpleCellIdentifi
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 3 && indexPath.row == 1) {
-        [self openBodyPreview];
+        [self openBodyPreview: self.selectedTab];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
