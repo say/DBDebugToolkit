@@ -84,7 +84,11 @@ typedef NS_ENUM(NSUInteger, DBBodyPreviewViewControllerViewState) {
                 }
             }
             self.textView.text = dataString;
-            [self setViewState:DBBodyPreviewViewControllerViewStateShowingText animated:YES];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [self setViewState:DBBodyPreviewViewControllerViewStateShowingText animated:YES];
+            });
+
+            
         }
     };
     if (mode == DBBodyPreviewViewControllerModeRequest) {
